@@ -7,12 +7,11 @@ on:
 
 # TODO test Mac?
 jobs:
-  make_check:
+  linux_make_check:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         scheduler: [nemesis, sherwood, distrib]
-        topology: [hwloc, no]
     steps:
     - uses: actions/checkout@v2
     - name: install hwloc
@@ -22,7 +21,7 @@ jobs:
     - name: build qthreads
       run: |
         ./autogen.sh
-        ./configure --with-scheduler=${{ matrix.scheduler }} --with-topology=${{ matrix.topology }}
+        ./configure --with-scheduler=${{ matrix.scheduler }}
         make
     - name: make check
       run: |
