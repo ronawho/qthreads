@@ -12,16 +12,17 @@ jobs:
     strategy:
       matrix:
         scheduler: [nemesis, sherwood, distrib]
+        topology: [hwloc, no]
     steps:
     - uses: actions/checkout@v2
     - name: install hwloc
       run: |
-        sudo apt-get install hwloc
+        sudo apt-get install hwloc libhwloc-dev
         hwloc-ls --version
     - name: build qthreads
       run: |
         ./autogen.sh
-        ./configure --with-scheduler=${{ matrix.scheduler }}
+        ./configure --with-scheduler=${{ matrix.scheduler }} --with-topology=${{ matrix.topology }}
         make
     - name: make check
       run: |
