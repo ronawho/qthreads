@@ -27,3 +27,20 @@ jobs:
     - name: make check
       run: |
         make check
+
+  mac_make_check:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: install hwloc
+      run: |
+        brew install hwloc 
+        hwloc-ls --version
+    - name: build qthreads
+      run: |
+        ./autogen.sh
+        ./configure
+        make
+    - name: make check
+      run: |
+        make check
